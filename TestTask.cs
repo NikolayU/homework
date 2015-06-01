@@ -49,6 +49,7 @@ namespace Testovoe
                 {
                     bool eq = false;  
                     sw.WriteLine("<html>");
+
                     // Отделение знаков препинания:
                     while (sr.Peek() >= 0)
                     {
@@ -67,6 +68,7 @@ namespace Testovoe
                                 k += 2;
                             }
                         }
+
                         // Поиск совпадающих слов и запись:
                         for (int i = 0; i < slova.Length; i++)
                         {

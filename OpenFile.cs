@@ -8,9 +8,12 @@ using System.Windows.Forms;
 
 namespace Testovoe
 {
-    class OpenFile
+  public  class OpenFile
     {
-        private string fpath="";
+      public OpenFile(){
+          this.fpath = "";
+        }
+        private string fpath;
         /// <summary>
         /// Путь к последнему открытому файлу
         /// </summary>
