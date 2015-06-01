@@ -19,63 +19,22 @@ namespace Testovoe
             InitializeComponent();
         }
 
-        OpenFileDialog openFileDialog1 = new OpenFileDialog();
         OpenFileDialog openFileDialog2 = new OpenFileDialog();
+        OpenFile of = new OpenFile();
         string[] dictionary;  // словарь
         int n ;  // счетчик созданных файлов (0 не пишется)
         const int N = 20;  // количество строк в одном файле
 
         private void button1_Click(object sender, EventArgs e)
         {
-            openFileDialog1.InitialDirectory = "C://";
-            openFileDialog1.Filter = "text files (*.txt,*.fb2,*.doc,*.docx,*.rtf,*.odt)|*.txt;*.fb2;*.doc;*.docx;*.rtf;*.odt";
-            openFileDialog1.FilterIndex = 1;
-            openFileDialog1.RestoreDirectory = true;
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    StreamReader file = File.OpenText(openFileDialog1.FileName);
-                    dictionary = file.ReadToEnd().Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-                    DictionaryPath.Text = openFileDialog1.FileName;
-                    // Проверка условия "Файл словаря содержит произвольное количество строк, каждая из которых содержит ровно одно слово":
-                    for (int i = 0; i < dictionary.Length; i++)
-                    {
-                        string[] temp;
-                        temp = dictionary[i].Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                        if (temp.Length != 1)
-                        {
-                            MessageBox.Show("Неверная структура файла словаря");
-                            DictionaryPath.Text = "";
-                            break;
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Ошибка при чтении файла: " + ex.Message);
-                }
-            }
+            dictionary = of.getDictionary();
+            DictionaryPath.Text = of.Fpath;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            openFileDialog2.InitialDirectory = "C://";
-            openFileDialog2.Filter = "text files (*.txt,*.fb2,*.doc,*.docx,*.rtf,*.odt)|*.txt;*.fb2;*.doc;*.docx;*.rtf;*.odt";
-            openFileDialog2.FilterIndex = 1;
-            openFileDialog2.RestoreDirectory = true;
-            if (openFileDialog2.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    StreamReader file = File.OpenText(openFileDialog2.FileName);
-                    TextPath.Text = openFileDialog2.FileName;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Ошибка при чтении файла: " + ex.Message);
-                }
-            }
+             openFileDialog2 = of.getFile();
+            TextPath.Text = of.Fpath;
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -145,6 +104,7 @@ namespace Testovoe
                     sw.WriteLine("</html>");
                     sw.Close();
                 }
+                MessageBox.Show("Done!");
             }
             else
                 MessageBox.Show("Указан пустой путь");
